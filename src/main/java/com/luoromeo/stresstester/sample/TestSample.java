@@ -20,6 +20,9 @@ import java.util.Map;
 @SpringBootTest
 public class TestSample {
 
+    /**
+     * 泛化调用测试
+     */
     @Test
     public void genericInvokeStressTest() {
 
