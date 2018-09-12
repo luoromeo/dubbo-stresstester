@@ -5,6 +5,7 @@ import com.alibaba.dubbo.config.ReferenceConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
 import com.alibaba.dubbo.rpc.service.GenericService;
 import com.luoromeo.stresstester.entity.ApiEntity;
+import com.luoromeo.stresstester.entity.Parameter;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -59,7 +60,7 @@ public class DubboServiceFactory {
      * @param apiEntity
      * @return
      */
-    public Object genericDubboInvoke(String method, List<Map<String, Object>> parameters, ApiEntity apiEntity) {
+    public Object genericDubboInvoke(String method, List<Parameter> parameters, ApiEntity apiEntity) {
         if (method == null) {
             throw new RuntimeException("method should not null !");
         }
@@ -91,8 +92,8 @@ public class DubboServiceFactory {
             String[] invokeParamTypes = new String[len];
             Object[] invokeParams = new Object[len];
             for (int i = 0; i < len; i++) {
-                invokeParamTypes[i] = parameters.get(i).get("ParamType") + "";
-                invokeParams[i] = parameters.get(i).get("Object");
+                invokeParamTypes[i] = parameters.get(i).getParamType() + "";
+                invokeParams[i] = parameters.get(i).getObject();
             }
 
             return genericService.$invoke(method, invokeParamTypes, invokeParams);

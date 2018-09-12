@@ -2,43 +2,34 @@ package com.luoromeo.stresstester.sample;
 
 
 import com.luoromeo.stresstester.entity.ApiEntity;
+import com.luoromeo.stresstester.entity.Parameter;
 import com.luoromeo.stresstester.factory.DubboServiceFactory;
+import com.taobao.stresstester.StressTestUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class TestSample {
 
     /**
-     * 泛化调用测试
+     * 采用泛化调用的性能测试
      */
     @Test
     public void genericInvokeStressTest() {
 
-        List<Map<String, Object>> parameters = new LinkedList<>();
+        List<Parameter> parameters = new LinkedList<>();
+        parameters.add(new Parameter("java.lang.String", "xiamen"));
 
-        Map<String, Object> cityName =new HashMap<>();
-        cityName.put("ParamType", "java.lang.String");
-        cityName.put("Object", "xiamen");
-        parameters.add(cityName);
+        ApiEntity apiEntity = new ApiEntity("findCityByName", "v1", "org.spring.springboot.dubbo.CityDubboService");
 
-        ApiEntity apiEntity = new ApiEntity();
-        apiEntity.setName("findCityByName");
-        apiEntity.setApiVersion("v1");
-        apiEntity.setDubboApiName("org.spring.springboot.dubbo.CityDubboService");
+        StressTestUtils.testAndPrint(100, 1000, () -> DubboServiceFactory.getInstance().genericDubboInvoke(apiEntity.getName(), parameters, apiEntity));
 
-        DubboServiceFactory.getInstance().genericDubboInvoke(apiEntity.getName(), parameters, apiEntity);
 
     }
 }

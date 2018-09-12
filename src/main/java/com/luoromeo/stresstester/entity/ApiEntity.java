@@ -10,6 +10,22 @@ public class ApiEntity {
 
     private String dubboApiVersion;
 
+    public ApiEntity() {
+    }
+
+    public ApiEntity(String name, String apiVersion, String dubboApiName) {
+        this.name = name;
+        this.apiVersion = apiVersion;
+        this.dubboApiName = dubboApiName;
+    }
+
+    public ApiEntity(String name, String apiVersion, String dubboApiName, String dubboApiVersion) {
+        this.name = name;
+        this.apiVersion = apiVersion;
+        this.dubboApiName = dubboApiName;
+        this.dubboApiVersion = dubboApiVersion;
+    }
+
     public String getName() {
         return name;
     }
