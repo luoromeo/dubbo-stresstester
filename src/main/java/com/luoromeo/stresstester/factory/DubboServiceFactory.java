@@ -76,7 +76,7 @@ public class DubboServiceFactory {
             reference.setTimeout(60 * 1000);
 
             if (null == apiEntity.getDubboApiVersion() || "".equals(apiEntity.getDubboApiVersion())) {
-                reference.setVersion("1.0.0");
+                reference.setVersion("0.0.0");
             } else {
                 reference.setVersion(apiEntity.getDubboApiVersion());
             }
